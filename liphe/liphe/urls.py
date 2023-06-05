@@ -17,12 +17,12 @@ Including another URLconf
 from django.contrib import admin
 
 from django.urls import path, include
-
+from blog import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from blog.sitemaps import PostSitemap
-
+from blog.feeds import LatestPostsFeed
 #add imports here
 
 sitemaps = {
@@ -31,8 +31,10 @@ sitemaps = {
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #add pths here)
+    #add paths here)
+    path("feed/rss", LatestPostsFeed(), name="post_feed"),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
+    path('upload/', views.image_upload_view),
     path('summernote/', include('django_summernote.urls')),
     path('', include('blog.urls')),
        
